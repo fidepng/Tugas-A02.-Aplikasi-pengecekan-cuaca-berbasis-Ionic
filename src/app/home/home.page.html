@@ -1,0 +1,69 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title> Weather App </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refresh()" class="refresh-button">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="weather-container" *ngIf="!loading && !error">
+    <div class="weather-card">
+      <div class="location">
+        <ion-icon name="location"></ion-icon>
+        <h2>{{ weatherData?.name }}</h2>
+      </div>
+
+      <div class="temperature">
+        <h1>{{ weatherData?.main?.temp | number:'1.0-0' }}°C</h1>
+      </div>
+
+      <div class="weather-info">
+        <img
+          [src]="getWeatherIcon(weatherData?.weather[0]?.icon)"
+          alt="weather icon"
+        />
+        <h3>{{ weatherData?.weather[0]?.description }}</h3>
+      </div>
+
+      <div class="details">
+        <div class="detail-item">
+          <ion-icon name="water"></ion-icon>
+          <p>Kelembaban: {{ weatherData?.main?.humidity }}%</p>
+        </div>
+        <div class="detail-item">
+          <ion-icon name="speedometer"></ion-icon>
+          <p>Tekanan: {{ weatherData?.main?.pressure }} hPa</p>
+        </div>
+        <div class="detail-item">
+          <ion-icon name="wind"></ion-icon>
+          <p>Kecepatan Angin: {{ weatherData?.wind?.speed }} m/s</p>
+        </div>
+        <div class="detail-item">
+          <ion-icon name="thermometer"></ion-icon>
+          <p>
+            Terasa Seperti: {{ weatherData?.main?.feels_like | number:'1.0-0'
+            }}°C
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-container" *ngIf="error">
+    <ion-icon name="cloud-offline-outline"></ion-icon>
+    <p>{{ error }}</p>
+    <ion-button expand="block" (click)="refresh()">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      Coba Lagi
+    </ion-button>
+  </div>
+
+  <div class="loading-container" *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Memuat data cuaca...</p>
+  </div>
+</ion-content>
