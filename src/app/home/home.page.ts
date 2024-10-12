@@ -10,8 +10,9 @@ export class HomePage implements OnInit {
   weatherData: any;
   loading: boolean = true;
   error: string = '';
+  searchCity: string = 'Manado';
 
-  constructor(public weatherService: WeatherService) {} // Ubah private menjadi public
+  constructor(public weatherService: WeatherService) {}
 
   ngOnInit() {
     this.loadWeather();
@@ -19,13 +20,14 @@ export class HomePage implements OnInit {
 
   loadWeather() {
     this.loading = true;
-    this.weatherService.getWeather().subscribe({
+    this.error = '';
+    this.weatherService.getWeather(this.searchCity).subscribe({
       next: (data) => {
         this.weatherData = data;
         this.loading = false;
       },
       error: (error) => {
-        this.error = 'Gagal memuat data cuaca';
+        this.error = 'Kota tidak ditemukan atau terjadi kesalahan';
         this.loading = false;
         console.error('Error:', error);
       },
@@ -34,6 +36,12 @@ export class HomePage implements OnInit {
 
   getWeatherIcon(icon: string): string {
     return this.weatherService.getWeatherIcon(icon);
+  }
+
+  searchWeather(event: any) {
+    if (event.key === 'Enter') {
+      this.loadWeather();
+    }
   }
 
   refresh() {

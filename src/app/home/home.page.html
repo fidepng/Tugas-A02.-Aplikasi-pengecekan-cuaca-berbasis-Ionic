@@ -1,15 +1,28 @@
-<ion-header [translucent]="true" class="ion-no-border">
+<ion-header>
   <ion-toolbar>
     <ion-title> Weather App </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="refresh()" class="refresh-button">
+      <ion-button (click)="refresh()">
         <ion-icon name="refresh-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
+  <div class="search-container">
+    <ion-item>
+      <ion-icon name="search-outline" slot="start"></ion-icon>
+      <ion-input
+        [(ngModel)]="searchCity"
+        (keyup.enter)="searchWeather($event)"
+        placeholder="Masukkan nama kota..."
+        type="text"
+      >
+      </ion-input>
+    </ion-item>
+  </div>
+
   <div class="weather-container" *ngIf="!loading && !error">
     <div class="weather-card">
       <div class="location">
@@ -32,21 +45,16 @@
       <div class="details">
         <div class="detail-item">
           <ion-icon name="water"></ion-icon>
-          <p>Kelembaban: {{ weatherData?.main?.humidity }}%</p>
+          <p>Kelembaban: <br /><b> {{ weatherData?.main?.humidity }}% </b></p>
         </div>
         <div class="detail-item">
           <ion-icon name="speedometer"></ion-icon>
-          <p>Tekanan: {{ weatherData?.main?.pressure }} hPa</p>
+          <p>Tekanan: <br /><b> {{ weatherData?.main?.pressure }} hPa </b></p>
         </div>
         <div class="detail-item">
-          <ion-icon name="wind"></ion-icon>
-          <p>Kecepatan Angin: {{ weatherData?.wind?.speed }} m/s</p>
-        </div>
-        <div class="detail-item">
-          <ion-icon name="thermometer"></ion-icon>
+          <ion-icon name="cloud"></ion-icon>
           <p>
-            Terasa Seperti: {{ weatherData?.main?.feels_like | number:'1.0-0'
-            }}°C
+            Kecepatan Angin: <br /><b> {{ weatherData?.wind?.speed }} m/s </b>
           </p>
         </div>
       </div>
@@ -54,16 +62,17 @@
   </div>
 
   <div class="error-container" *ngIf="error">
-    <ion-icon name="cloud-offline-outline"></ion-icon>
+    <ion-icon name="cloud-offline"></ion-icon>
     <p>{{ error }}</p>
-    <ion-button expand="block" (click)="refresh()">
-      <ion-icon name="refresh-outline" slot="start"></ion-icon>
-      Coba Lagi
-    </ion-button>
+    <ion-button (click)="refresh()">Coba Lagi</ion-button>
   </div>
 
   <div class="loading-container" *ngIf="loading">
-    <ion-spinner name="crescent"></ion-spinner>
+    <ion-spinner></ion-spinner>
     <p>Memuat data cuaca...</p>
+  </div>
+
+  <div class="footer">
+    <p>Teofide Pangemanan - 220211060317</p>
   </div>
 </ion-content>

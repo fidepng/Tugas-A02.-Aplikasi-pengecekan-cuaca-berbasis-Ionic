@@ -1,64 +1,81 @@
 :host {
-  --primary-color: #4361ee;
-  --secondary-color: #3f37c9;
+  --primary-color: #4d68df;
   --text-color: #2b2d42;
   --light-text: #8d99ae;
+  --background-color: #f8f9fa;
+}
+
+ion-content {
+  --background: var(--background-color);
+}
+
+:host,
+ion-content {
+  height: 100vh; /* Ensures content fits the entire viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute space evenly */
+  --background: var(--background-color);
 }
 
 ion-header {
   ion-toolbar {
-    --background: transparent;
-    --ion-color-base: transparent !important;
+    /* Add a gradient background for a more modern look */
+    --background: linear-gradient(135deg, #4d68df, #6a93ff);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
 
     ion-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--text-color);
+      color: white;
+      font-weight: 800;
+      letter-spacing: 1px; /* Slight spacing for elegance */
+    }
+
+    ion-icon,
+    ion-button {
+      color: white; /* Ensure icons and buttons are visible on the gradient */
     }
   }
 }
 
-ion-content {
-  --background: #f8f9fa;
+.search-container {
+  padding: 10px 20px;
+  background: white;
 
-  &::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background: linear-gradient(
-      120deg,
-      var(--primary-color),
-      var(--secondary-color)
-    );
-    border-radius: 0 0 45px 45px;
-    z-index: 0;
+  ion-item {
+    --background: var(--background-color);
+    --border-radius: 10px;
+    --padding-start: 10px;
+    --padding-end: 10px;
+
+    ion-icon {
+      color: var(--light-text);
+    }
+
+    ion-input {
+      --padding-start: 10px;
+      color: black;
+    }
   }
 }
 
 .weather-container {
-  position: relative;
-  padding: 20px;
-  height: 100%;
+  flex: 1; /* Allows the weather card to expand and fill the available space */
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  z-index: 1;
-  animation: fadeIn 0.5s ease-in-out;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  padding: 20px; /* Adjusted padding for better spacing */
+  height: auto; /* Prevents height overflow */
 }
 
 .weather-card {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 30px;
-  padding: 25px;
+  max-height: 70vh; /* Ensure the card doesn't exceed the viewport height */
+  overflow-y: auto; /* Allows internal scrolling if content overflows */
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
   width: 90%;
-  max-width: 400px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  margin-top: 60px;
-  animation: slideUp 0.5s ease-out;
+  max-width: 800px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .location {
@@ -66,16 +83,16 @@ ion-content {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 
   ion-icon {
-    font-size: 28px;
+    font-size: 24px;
     color: var(--primary-color);
   }
 
   h2 {
     margin: 0;
-    font-size: 28px;
+    font-size: 24px;
     color: var(--text-color);
     font-weight: 600;
   }
@@ -83,15 +100,13 @@ ion-content {
 
 .temperature {
   text-align: center;
-  margin: 30px 0;
+  margin: 20px 0;
 
   h1 {
-    font-size: 64px;
+    font-size: 48px;
     margin: 0;
     color: var(--primary-color);
     font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    animation: pulse 2s infinite;
   }
 }
 
@@ -102,53 +117,58 @@ ion-content {
   margin: 20px 0;
 
   img {
-    width: 120px;
-    height: 120px;
-    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1));
-    animation: float 3s ease-in-out infinite;
+    width: 100px;
+    height: 100px;
   }
 
   h3 {
     margin: 10px 0;
     color: var(--light-text);
     text-transform: capitalize;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 18px;
   }
 }
 
 .details {
-  background: rgba(67, 97, 238, 0.05);
-  border-radius: 20px;
+  background: var(--background-color);
+  border-radius: 15px;
   padding: 20px;
-  margin-top: 20px;
+  display: flex;
+  justify-content: space-between; /* Spread items evenly */
+  gap: 20px; /* Add some space between items */
 }
 
 .detail-item {
+  flex: 1; /* Ensure all items take up equal space */
   display: flex;
-  align-items: center;
-  gap: 15px;
-  margin: 15px 0;
+  flex-direction: column; /* Align content vertically */
+  align-items: center; /* Center the content horizontally */
+  text-align: center; /* Center the text */
+  gap: 10px; /* Space between icon and text */
   padding: 10px;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgba(67, 97, 238, 0.1);
-    transform: translateX(5px);
-  }
 
   ion-icon {
     color: var(--primary-color);
-    font-size: 24px;
+    font-size: 24px; /* Make icons slightly larger for better visibility */
   }
 
   p {
     margin: 0;
     color: var(--text-color);
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 16px; /* Slightly larger text for better readability */
   }
+}
+
+.footer {
+  text-align: center;
+  padding: 10px;
+  background: var(--background-color);
+  color: var(--light-text);
+  font-size: 12px;
+  width: 100%;
+  position: absolute; /* Positions the footer at the bottom of the viewport */
+  bottom: 0; /* Ensures the footer sticks to the bottom */
+  left: 0; /* Aligns the footer with the left edge */
 }
 
 .error-container,
@@ -160,106 +180,33 @@ ion-content {
   justify-content: center;
   text-align: center;
   padding: 20px;
-  position: relative;
-  z-index: 1;
 
   ion-icon {
-    font-size: 80px;
+    font-size: 48px;
     color: var(--light-text);
     margin-bottom: 20px;
-    animation: bounce 2s infinite;
   }
 
   p {
     color: var(--text-color);
     margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: 500;
   }
 
   ion-button {
     --background: var(--primary-color);
-    --border-radius: 12px;
-    --padding-start: 30px;
-    --padding-end: 30px;
-    height: 48px;
-    font-weight: 600;
-    font-size: 16px;
   }
 }
 
-// Animations
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-// Media Queries for Responsiveness
 @media (max-width: 576px) {
   .weather-card {
-    margin-top: 40px;
-    padding: 20px;
+    padding: 15px;
   }
 
   .temperature h1 {
-    font-size: 52px;
+    font-size: 42px;
   }
 
   .location h2 {
-    font-size: 24px;
-  }
-
-  .weather-info img {
-    width: 100px;
-    height: 100px;
+    font-size: 20px;
   }
 }
